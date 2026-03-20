@@ -238,6 +238,9 @@ def request_llm_analysis(payload):
         "允许表达确认条件，例如：'若下一根日线收盘仍站上 MA60，则确认站稳'。"
         "趋势状态只能描述当前数据所示状态，不允许使用未来判断。"
         "信号识别必须在以下类别中择一并说明依据：趋势形成、回踩回抽、刚好破位、等待确认。"
+        "信号识别、趋势状态、入场策略、风险控制、总结都必须使用自然中文描述。"
+        "禁止直接输出输入里的变量名、字段名、事件ID、布尔值或程序化表达，例如 short_platform_confirmed、event_ids、last_closed_below_ema60=true、snake_case 字段名、true、false。"
+        "如果需要引用依据，必须改写成自然语言，例如'最近收盘位于双均线下方'，而不是输出原始键名。"
         "入场策略必须给出'立即'或'等待确认'，并写明触发条件。"
         "风险控制必须引用客观价位或结构失效条件，例如跌回 EMA60 下方、重新回到双均线夹层。"
         "置信度必须按数据确认程度给出：高=至少有收盘确认且结构一致，中=部分确认但仍需条件，低=信号处于夹层或仅有盘中突破。"
@@ -304,15 +307,15 @@ def request_llm_analysis(payload):
 
 def render_llm_message(analysis):
     return (
-        f"[时间] {analysis['time']}\n"
-        f"[标的] {analysis['symbol']}\n"
-        f"[当前现价] {float(analysis['current_price']):.2f}\n"
-        f"[趋势状态] {analysis['trend_status']}\n"
-        f"[信号识别] {analysis['signal_recognition']}\n"
-        f"[入场策略] {analysis['entry_strategy']}\n"
-        f"[风险控制] {analysis['risk_control']}\n"
-        f"[置信度] {analysis['confidence']}\n"
-        f"[总结] {analysis['summary']}"
+        f"🕒 时间\n{analysis['time']}\n\n"
+        f"🎯 标的\n{analysis['symbol']}\n\n"
+        f"💰 当前现价\n{float(analysis['current_price']):.2f}\n\n"
+        f"📈 趋势状态\n{analysis['trend_status']}\n\n"
+        f"🔎 信号识别\n{analysis['signal_recognition']}\n\n"
+        f"🎯 入场策略\n{analysis['entry_strategy']}\n\n"
+        f"🛡️ 风险控制\n{analysis['risk_control']}\n\n"
+        f"📊 置信度\n{analysis['confidence']}\n\n"
+        f"🧾 总结\n{analysis['summary']}"
     )
 
 
